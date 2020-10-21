@@ -4,6 +4,8 @@
         "random": "c",
         "istream": "c",
         "ostream": "c",
-        "streambuf": "c"
+        "streambuf": "c",
+        "list": "cpp",
+        "atomic": "cpp"
     }
 }

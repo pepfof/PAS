@@ -10,25 +10,21 @@
   <object class="GtkEntryBuffer" id="Minute input">
     <property name="text" translatable="yes">0</property>
   </object>
+  <object class="GtkImage" id="Playimg">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">appointment-new</property>
+  </object>
+  <object class="GtkImage" id="Playimg1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">dialog-ok</property>
+  </object>
   <object class="GtkAdjustment" id="hour">
     <property name="upper">23</property>
     <property name="value">12</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
-  </object>
-  <object class="GtkImage" id="image1">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-add</property>
-  </object>
-  <object class="GtkButton" id="newb">
-    <property name="name">updatedefault</property>
-    <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="receives_default">True</property>
-    <property name="halign">start</property>
-    <property name="hexpand">True</property>
-    <property name="image">image1</property>
   </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
@@ -40,16 +36,15 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-copy</property>
   </object>
-  <object class="GtkImage" id="image4">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-add</property>
-  </object>
-  <object class="GtkListStore" id="liststore2">
+  <object class="GtkListStore" id="liststore">
     <columns>
-      <!-- column-name Номер -->
-      <column type="gint64"/>
-      <!-- column-name Время -->
+      <!-- column-name time -->
+      <column type="gchararray"/>
+      <!-- column-name num -->
+      <column type="guint64"/>
+      <!-- column-name text -->
+      <column type="gchararray"/>
+      <!-- column-name file -->
       <column type="gchararray"/>
     </columns>
   </object>
@@ -58,20 +53,14 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkAdjustment" id="second">
-    <property name="upper">59</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkEntryBuffer" id="secondinput">
-    <property name="text" translatable="yes">0</property>
-  </object>
   <object class="GtkWindow" id="window">
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
+    <property name="default_width">512</property>
+    <property name="default_height">512</property>
     <property name="destroy_with_parent">True</property>
     <property name="icon_name">computer</property>
-    <property name="gravity">center</property>
+    <property name="gravity">south</property>
     <property name="has_resize_grip">True</property>
     <child>
       <object class="GtkBox">
@@ -101,11 +90,10 @@
                     <property name="visible">True</property>
                     <property name="app_paintable">True</property>
                     <property name="can_focus">False</property>
-                    <property name="valign">baseline</property>
-                    <property name="margin_start">15</property>
-                    <property name="margin_end">14</property>
-                    <property name="margin_top">15</property>
-                    <property name="margin_bottom">15</property>
+                    <property name="margin_start">5</property>
+                    <property name="margin_end">5</property>
+                    <property name="margin_top">10</property>
+                    <property name="margin_bottom">5</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="spacing">20</property>
@@ -117,11 +105,27 @@
                         <property name="orientation">vertical</property>
                         <property name="spacing">10</property>
                         <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="opacity">0.4</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Новое оповещение</property>
+                            <attributes>
+                              <attribute name="scale" value="2"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="hexpand">True</property>
-                            <property name="vexpand">True</property>
                             <property name="orientation">vertical</property>
                             <property name="spacing">5</property>
                             <child>
@@ -170,7 +174,6 @@
                                 <property name="name">messageinput</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="vexpand">True</property>
                                 <property name="buffer">Messageinput</property>
                                 <property name="shadow_type">etched-in</property>
                                 <property name="caps_lock_warning">False</property>
@@ -190,7 +193,7 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">0</property>
+                            <property name="position">1</property>
                           </packing>
                         </child>
                         <child>
@@ -201,14 +204,13 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">1</property>
+                            <property name="position">2</property>
                           </packing>
                         </child>
                         <child>
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="vexpand">True</property>
                             <property name="orientation">vertical</property>
                             <property name="spacing">10</property>
                             <child>
@@ -284,7 +286,7 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">2</property>
+                            <property name="position">3</property>
                           </packing>
                         </child>
                         <child>
@@ -295,67 +297,50 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">3</property>
+                            <property name="position">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="nowb">
+                            <property name="label" translatable="yes">Отправить сейчас </property>
+                            <property name="name">updatedefault</property>
+                            <property name="width_request">160</property>
+                            <property name="height_request">50</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="halign">end</property>
+                            <property name="image">Playimg1</property>
+                            <property name="image_position">right</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">5</property>
                           </packing>
                         </child>
                         <child>
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="hexpand">True</property>
-                            <property name="vexpand">False</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">10</property>
                             <child>
-                              <object class="GtkBox">
+                              <object class="GtkSeparator">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="valign">center</property>
                                 <property name="hexpand">True</property>
-                                <child>
-                                  <object class="GtkLabel">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="valign">end</property>
-                                    <property name="vexpand">True</property>
-                                    <property name="label" translatable="yes">Начать в:</property>
-                                    <property name="xalign">0</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkFixed">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="valign">end</property>
-                                    <property name="hexpand">True</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkCheckButton" id="sendnow">
-                                    <property name="label" translatable="yes">ПОСЛАТЬ СРАЗУ</property>
-                                    <property name="name">sendnow</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">False</property>
-                                    <property name="valign">end</property>
-                                    <property name="draw_indicator">True</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">2</property>
-                                  </packing>
-                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">  или  </property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -364,150 +349,11 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkBox">
+                              <object class="GtkSeparator">
+                                <property name="width_request">15</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="spacing">10</property>
-                                <child>
-                                  <object class="GtkBox">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="hexpand">True</property>
-                                    <property name="vexpand">True</property>
-                                    <property name="spacing">3</property>
-                                    <property name="baseline_position">top</property>
-                                    <child>
-                                      <object class="GtkSpinButton" id="hourdial">
-                                        <property name="name">hourdial</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="hexpand">True</property>
-                                        <property name="buffer">Hourinput</property>
-                                        <property name="max_length">2</property>
-                                        <property name="width_chars">2</property>
-                                        <property name="text" translatable="yes">12</property>
-                                        <property name="shadow_type">out</property>
-                                        <property name="placeholder_text" translatable="yes">Час</property>
-                                        <property name="input_purpose">number</property>
-                                        <property name="orientation">vertical</property>
-                                        <property name="adjustment">hour</property>
-                                        <property name="climb_rate">1</property>
-                                        <property name="snap_to_ticks">True</property>
-                                        <property name="numeric">True</property>
-                                        <property name="wrap">True</property>
-                                        <property name="value">12</property>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkLabel">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">:</property>
-                                        <attributes>
-                                          <attribute name="font-desc" value="Sans 20"/>
-                                        </attributes>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkSpinButton" id="minutedial">
-                                        <property name="name">minutedial</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="hexpand">True</property>
-                                        <property name="buffer">Minute input</property>
-                                        <property name="max_length">2</property>
-                                        <property name="width_chars">2</property>
-                                        <property name="text" translatable="yes">0</property>
-                                        <property name="shadow_type">out</property>
-                                        <property name="placeholder_text" translatable="yes">Минута</property>
-                                        <property name="input_purpose">number</property>
-                                        <property name="orientation">vertical</property>
-                                        <property name="adjustment">minute</property>
-                                        <property name="climb_rate">1</property>
-                                        <property name="snap_to_ticks">True</property>
-                                        <property name="numeric">True</property>
-                                        <property name="wrap">True</property>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">2</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkLabel">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">:</property>
-                                        <attributes>
-                                          <attribute name="font-desc" value="Sans 20"/>
-                                        </attributes>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">3</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkSpinButton" id="secondial">
-                                        <property name="name">secondial</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="hexpand">True</property>
-                                        <property name="buffer">secondinput</property>
-                                        <property name="max_length">2</property>
-                                        <property name="width_chars">2</property>
-                                        <property name="text" translatable="yes">0</property>
-                                        <property name="placeholder_text" translatable="yes">Секунда</property>
-                                        <property name="input_purpose">number</property>
-                                        <property name="orientation">vertical</property>
-                                        <property name="adjustment">second</property>
-                                        <property name="climb_rate">1</property>
-                                        <property name="snap_to_ticks">True</property>
-                                        <property name="numeric">True</property>
-                                        <property name="wrap">True</property>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                        <property name="position">4</property>
-                                      </packing>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkCalendar" id="calendial">
-                                    <property name="name">calendial</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="hexpand">True</property>
-                                    <property name="vexpand">True</property>
-                                    <property name="year">2020</property>
-                                    <property name="month">10</property>
-                                    <property name="show_week_numbers">True</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
+                                <property name="valign">center</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -519,7 +365,187 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">4</property>
+                            <property name="position">6</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="valign">start</property>
+                            <property name="hexpand">True</property>
+                            <property name="vexpand">True</property>
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">10</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="valign">start</property>
+                                <property name="hexpand">True</property>
+                                <property name="spacing">10</property>
+                                <child>
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="hexpand">True</property>
+                                    <property name="resize_mode">immediate</property>
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkCalendar" id="calendial">
+                                        <property name="name">calendial</property>
+                                        <property name="width_request">1</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="hexpand">True</property>
+                                        <property name="vexpand">True</property>
+                                        <property name="year">2020</property>
+                                        <property name="month">10</property>
+                                        <property name="show_week_numbers">True</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkBox">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="hexpand">False</property>
+                                    <property name="orientation">vertical</property>
+                                    <property name="spacing">10</property>
+                                    <child>
+                                      <object class="GtkBox">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="hexpand">True</property>
+                                        <property name="vexpand">True</property>
+                                        <property name="resize_mode">immediate</property>
+                                        <property name="spacing">3</property>
+                                        <property name="baseline_position">top</property>
+                                        <child>
+                                          <object class="GtkSpinButton" id="hourdial">
+                                            <property name="name">hourdial</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="buffer">Hourinput</property>
+                                            <property name="max_length">2</property>
+                                            <property name="width_chars">2</property>
+                                            <property name="text" translatable="yes">12</property>
+                                            <property name="shadow_type">out</property>
+                                            <property name="placeholder_text" translatable="yes">Час</property>
+                                            <property name="input_purpose">number</property>
+                                            <property name="orientation">vertical</property>
+                                            <property name="adjustment">hour</property>
+                                            <property name="climb_rate">1</property>
+                                            <property name="snap_to_ticks">True</property>
+                                            <property name="numeric">True</property>
+                                            <property name="wrap">True</property>
+                                            <property name="value">12</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="label" translatable="yes">:</property>
+                                            <attributes>
+                                              <attribute name="font-desc" value="Sans 20"/>
+                                            </attributes>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="minutedial">
+                                            <property name="name">minutedial</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="hexpand">True</property>
+                                            <property name="buffer">Minute input</property>
+                                            <property name="max_length">2</property>
+                                            <property name="width_chars">2</property>
+                                            <property name="text" translatable="yes">0</property>
+                                            <property name="shadow_type">out</property>
+                                            <property name="placeholder_text" translatable="yes">Минута</property>
+                                            <property name="input_purpose">number</property>
+                                            <property name="orientation">vertical</property>
+                                            <property name="adjustment">minute</property>
+                                            <property name="climb_rate">1</property>
+                                            <property name="snap_to_ticks">True</property>
+                                            <property name="numeric">True</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="sendb">
+                                        <property name="label" translatable="yes">Запланировать</property>
+                                        <property name="name">updatedefault</property>
+                                        <property name="width_request">160</property>
+                                        <property name="height_request">50</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <property name="hexpand">True</property>
+                                        <property name="image">Playimg</property>
+                                        <property name="image_position">right</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">7</property>
                           </packing>
                         </child>
                       </object>
@@ -544,49 +570,20 @@
                       <object class="GtkBox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_start">15</property>
-                        <property name="margin_end">15</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
                         <property name="orientation">vertical</property>
-                        <property name="spacing">15</property>
+                        <property name="spacing">10</property>
                         <child>
-                          <object class="GtkTreeView">
+                          <object class="GtkLabel">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="hexpand">True</property>
-                            <property name="vexpand">True</property>
-                            <property name="model">liststore2</property>
-                            <property name="reorderable">True</property>
-                            <property name="enable_grid_lines">horizontal</property>
-                            <property name="enable_tree_lines">True</property>
-                            <child internal-child="selection">
-                              <object class="GtkTreeSelection"/>
-                            </child>
-                            <child>
-                              <object class="GtkTreeViewColumn" id="Номер">
-                                <property name="sizing">fixed</property>
-                                <property name="title" translatable="yes">Номер</property>
-                                <property name="expand">True</property>
-                                <property name="reorderable">True</property>
-                                <property name="sort_indicator">True</property>
-                                <child>
-                                  <object class="GtkCellRendererText"/>
-                                </child>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkTreeViewColumn" id="Время">
-                                <property name="sizing">autosize</property>
-                                <property name="title" translatable="yes">Время</property>
-                                <property name="expand">True</property>
-                                <property name="reorderable">True</property>
-                                <property name="sort_indicator">True</property>
-                                <child>
-                                  <object class="GtkCellRendererText"/>
-                                </child>
-                              </object>
-                            </child>
+                            <property name="can_focus">False</property>
+                            <property name="opacity">0.4</property>
+                            <property name="halign">start</property>
+                            <property name="label" translatable="yes">Запланированные оповещения</property>
+                            <attributes>
+                              <attribute name="scale" value="2"/>
+                            </attributes>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -595,55 +592,135 @@
                           </packing>
                         </child>
                         <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="vexpand">True</property>
+                            <property name="shadow_type">in</property>
+                            <child>
+                              <object class="GtkTreeView" id="entrylist">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="hexpand">True</property>
+                                <property name="vexpand">True</property>
+                                <property name="hscroll_policy">natural</property>
+                                <property name="model">liststore</property>
+                                <property name="reorderable">True</property>
+                                <property name="enable_grid_lines">both</property>
+                                <property name="enable_tree_lines">True</property>
+                                <property name="activate_on_single_click">True</property>
+                                <child internal-child="selection">
+                                  <object class="GtkTreeSelection">
+                                    <property name="mode">browse</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkTreeViewColumn" id="time">
+                                    <property name="resizable">True</property>
+                                    <property name="sizing">autosize</property>
+                                    <property name="title" translatable="yes">Время</property>
+                                    <property name="expand">True</property>
+                                    <property name="sort_indicator">True</property>
+                                    <property name="sort_order">descending</property>
+                                    <property name="sort_column_id">1</property>
+                                    <child>
+                                      <object class="GtkCellRendererText"/>
+                                      <attributes>
+                                        <attribute name="text">0</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkTreeViewColumn" id="text">
+                                    <property name="resizable">True</property>
+                                    <property name="sizing">autosize</property>
+                                    <property name="title" translatable="yes">Сообщение</property>
+                                    <property name="expand">True</property>
+                                    <child>
+                                      <object class="GtkCellRendererText" id="textrenderer">
+                                        <property name="wrap_mode">word</property>
+                                        <property name="wrap_width">256</property>
+                                      </object>
+                                      <attributes>
+                                        <attribute name="text">2</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkTreeViewColumn">
+                                    <property name="resizable">True</property>
+                                    <property name="sizing">autosize</property>
+                                    <property name="title" translatable="yes">Медиафайл</property>
+                                    <child>
+                                      <object class="GtkCellRendererText"/>
+                                      <attributes>
+                                        <attribute name="text">3</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkTreeViewColumn">
+                                    <property name="title" translatable="yes">num</property>
+                                    <child>
+                                      <object class="GtkCellRendererText"/>
+                                      <attributes>
+                                        <attribute name="text">1</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="halign">end</property>
                             <property name="valign">center</property>
-                            <property name="hexpand">True</property>
                             <property name="spacing">15</property>
-                            <child>
-                              <object class="GtkButton" id="deleb">
-                                <property name="name">updatedefault</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="hexpand">True</property>
-                                <property name="image">image2</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
+                            <property name="homogeneous">True</property>
                             <child>
                               <object class="GtkButton" id="editb">
+                                <property name="label" translatable="yes"> Копировать</property>
                                 <property name="name">updatedefault</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="halign">baseline</property>
                                 <property name="hexpand">True</property>
                                 <property name="image">image3</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">2</property>
+                                <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkButton" id="sendb">
+                              <object class="GtkButton" id="deleb">
+                                <property name="label" translatable="yes"> Удалить</property>
                                 <property name="name">updatedefault</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="halign">baseline</property>
                                 <property name="hexpand">True</property>
-                                <property name="image">image4</property>
+                                <property name="image">image2</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">3</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
@@ -686,5 +763,14 @@
     <child type="titlebar">
       <placeholder/>
     </child>
+  </object>
+  <object class="GtkTextBuffer" id="reportbuffer"/>
+  <object class="GtkAdjustment" id="second">
+    <property name="upper">59</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkEntryBuffer" id="secondinput">
+    <property name="text" translatable="yes">0</property>
   </object>
 </interface>
