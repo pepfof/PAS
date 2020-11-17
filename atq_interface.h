@@ -76,49 +76,6 @@ void remove_deleted_entries(GtkTreeView *list){
    }while(valid);}
 }
 
-void readatq(GtkTreeView *list){
-    int j =0;
-    while(j<2048){
-    oldentry[j].number=entry[j].number;
-    entry[j].number=0;
-    j++;
-    }
-    j=0;
-FILE *fp;
-FILE *pa;
-int status;
-char input[128];
-fp = popen("atq", "r");
-int i = 0;
-char temp[64] = "";
-char tempfilename[64] = "";
-char tempmessage[64]="";
-char tempattachment[64]="";
-bool tmessage, tfile;
-while (fgets(input, 128, fp) != NULL){
-    sscanf(input, "%lld %s %s %d %d:%d:%d %d", &entry[i].number, entry[i].weekday, entry[i].month, &entry[i].date, &entry[i].hour, &entry[i].minute, &entry[i].second, &entry[i].year);
-    sprintf(temp, "%02d/%02d/%04d %02d:%02d", entry[i].date, monthdecode(entry[i].month), entry[i].year, entry[i].hour, entry[i].minute);
-    sprintf(tempfilename, "./pannouncements/%02d_%02d_%04d_%02d_%02d.pa", entry[i].date, monthdecode(entry[i].month), entry[i].year, entry[i].hour, entry[i].minute);
-    pa = fopen(tempfilename, "r");
-    fscanf(pa, "pas-send -I %d -F %d -i \"%[^\"]s -f \"%63s\"", &tmessage, &tfile, tempmessage, tempattachment);
-    bool c= 0;
-    while(j<2048){
-        if(entry[i].number==oldentry[j].number){
-            c=1;
-    }j++;
-    }
-    if(!c){
-        if(tmessage){
-    add_to_list(list, tempmessage, temp, entry[i].number);}
-    else{
-    add_to_list(list, "", temp, entry[i].number);
-        }
-    }
-    i++;
-    }
-    remove_deleted_entries(list);
-    pclose(fp);
-}
 
 
 void delete_entry_at(int eyear, int emonth, int edate, int ehour, int eminute){
@@ -138,4 +95,53 @@ while (fgets(input, 128, fp) != NULL){
         system(temptemp);*/}
     i++;}
 pclose(fp);
+}
+
+void readatq(GtkTreeView *list){
+    int j =0;
+    while(j<2048){
+    oldentry[j].number=entry[j].number;
+    entry[j].number=0;
+    j++;
+    }
+    j=0;
+FILE *fp;
+FILE *pa;
+int status;
+char input[128];
+fp = popen("atq", "r");
+int i = 0;
+char temp[64] = "";
+char tempfilename[64] = "";
+char tempmessage[64]="*ошибка*";
+char tempattachment[64]="";
+bool tmessage, tfile;
+while (fgets(input, 128, fp) != NULL){
+    sscanf(input, "%lld %s %s %d %d:%d:%d %d", &entry[i].number, entry[i].weekday, entry[i].month, &entry[i].date, &entry[i].hour, &entry[i].minute, &entry[i].second, &entry[i].year);
+    sprintf(temp, "%02d/%02d/%04d %02d:%02d", entry[i].date, monthdecode(entry[i].month), entry[i].year, entry[i].hour, entry[i].minute);
+    sprintf(tempfilename, "./pannouncements/%02d_%02d_%04d_%02d_%02d.pa", entry[i].date, monthdecode(entry[i].month), entry[i].year, entry[i].hour, entry[i].minute);
+    pa = fopen(tempfilename, "r");
+      if (pa!=NULL)
+  {
+    fscanf(pa, "pas-send -I %d -F %d -i \"%[^\"]s -f \"%63s\"", &tmessage, &tfile, tempmessage, tempattachment);
+    fclose (pa);
+    bool c= 0;
+    while(j<2048){
+        if(entry[i].number==oldentry[j].number){
+            c=1;
+    }j++;
+    }
+    if(!c){
+        if(tmessage){
+    add_to_list(list, tempmessage, temp, entry[i].number);}
+    else{
+    add_to_list(list, "", temp, entry[i].number);
+        }
+    }
+  }
+  else{delete_entry_at(entry[i].year, monthdecode(entry[i].month),entry[i].date,entry[i].hour,entry[i].minute);}
+    i++;
+    }
+    remove_deleted_entries(list);
+    pclose(fp);
 }
