@@ -3,7 +3,7 @@
 #include <limits.h>
 
 
-void add_to_list(GtkTreeView *list, const gchar *numb, const gchar *str, guint64 num) {
+void add_to_list(GtkTreeView *list, const gchar *numb, const gchar *str, guint64 num, const gchar *str1) {
     
   GtkListStore *store;
   GtkTreeIter iter;
@@ -12,7 +12,7 @@ void add_to_list(GtkTreeView *list, const gchar *numb, const gchar *str, guint64
       (GTK_TREE_VIEW(list)));
 
   gtk_list_store_append(store, &iter);
-  gtk_list_store_set(store, &iter, 2, numb, 0, str, 1, num,-1);
+  gtk_list_store_set(store, &iter, 3, str1, 2, numb, 0, str, 1, num,-1);
 }
 
 struct entries {
@@ -111,10 +111,10 @@ int status;
 char input[128];
 fp = popen("atq", "r");
 int i = 0;
-char temp[64] = "";
-char tempfilename[64] = "";
-char tempmessage[64]="*ошибка*";
-char tempattachment[64]="";
+char temp[512] = "";
+char tempfilename[512] = "";
+char tempmessage[512]="*ошибка*";
+char tempattachment[512]="*ошибка*";
 bool tmessage, tfile;
 while (fgets(input, 128, fp) != NULL){
     sscanf(input, "%lld %s %s %d %d:%d:%d %d", &entry[i].number, entry[i].weekday, entry[i].month, &entry[i].date, &entry[i].hour, &entry[i].minute, &entry[i].second, &entry[i].year);
@@ -123,7 +123,13 @@ while (fgets(input, 128, fp) != NULL){
     pa = fopen(tempfilename, "r");
       if (pa!=NULL)
   {
-    fscanf(pa, "pas-send -I %d -F %d -i \"%[^\"]s -f \"%63s\"", &tmessage, &tfile, tempmessage, tempattachment);
+    char temptemptemp[1024];
+    fgets(temptemptemp, 1024, pa);
+    sscanf(temptemptemp, "pas-send -I %d -F %d -i \"%[^\"] -f %[]", &tmessage, &tfile, tempmessage, tempattachment);
+ //   sscanf(temptemptemp, "-f %64[^\"]s", tempattachment);
+    char temptemp[1024];
+    sprintf(temptemp, "echo %s %d", tempattachment, entry[i].number);
+    system(temptemp);
     fclose (pa);
     bool c= 0;
     while(j<2048){
@@ -133,9 +139,14 @@ while (fgets(input, 128, fp) != NULL){
     }
     if(!c){
         if(tmessage){
-    add_to_list(list, tempmessage, temp, entry[i].number);}
+            if(tfile){
+    add_to_list(list, tempmessage, temp, entry[i].number, tempattachment);}
+    else{add_to_list(list, tempmessage, temp, entry[i].number, "");}
+    }
     else{
-    add_to_list(list, "", temp, entry[i].number);
+        if(tfile){
+    add_to_list(list, "", temp, entry[i].number, tempattachment);}
+    else{add_to_list(list, "", temp, entry[i].number, "");}
         }
     }
   }

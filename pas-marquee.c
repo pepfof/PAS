@@ -15,19 +15,19 @@ double maxtime = -100000000;
 float textspeed = 0.25;
 int main(int argc, char ** argv)
 {
-    char message[128], string[128];
+    char message[2048];
     char *argv0 = argv[0];
     int j;
     for (j=1; argv[j] && argv[j][0] == '-'; ++j) {  
             if (strcmp(argv[j], "-i") == 0) {
-            if (sscanf (argv[++j], "%s", message) != 1) {
+            if (sscanf (argv[++j], "%[^\"]", message) != 1) {
                 fprintf(stderr, "Improper usage. use -w to specify screen width, -h: height, -x and -y are explanatory. -s for noscroll and -i for message");
                 return(1);
             }
             }else
             if (strcmp(argv[j], "-w") == 0) {
             if (sscanf (argv[++j], "%d", &winw) != 1) {
-                return(1);
+                return(1); 
             }
             } else
             if (strcmp(argv[j], "-h") == 0) {
@@ -92,9 +92,13 @@ int main(int argc, char ** argv)
     timespec timems;
     timespec initial;
     clock_gettime(CLOCK_MONOTONIC, &initial);
-    int maxleftposition = 0;
-    if(fontsurface->w>wbr){maxleftposition =(fontsurface->w*2);}
+    long long int maxleftposition = 0;
+    if(fontsurface->w>wbr){maxleftposition =(fontsurface->w+wbr);}
     else{maxleftposition=(wbr+fontsurface->w);}
+    char tempfiletemplatedone[]="/tmp/pas_marquee_pipe_%d_done";
+    char tempfilenamedone[512];
+    sprintf(tempfilenamedone, tempfiletemplatedone, getpid());
+    FILE * tempfiledonepipe;
     while (!quit)
     {
         SDL_PollEvent(&event);
@@ -118,7 +122,9 @@ int main(int argc, char ** argv)
         }
         dstrect.x = wbr-textspeed*timeelapsed;
         }
-        if(olddone!=done){printf("2\n");};
+        if(olddone!=done){
+            tempfiledonepipe = fopen(tempfilenamedone, "w");
+            fflush(tempfiledonepipe);};
         SDL_SetRenderDrawColor(renderer, 0x25, 0x25, 0x25, 0x25);
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, fonttexture, NULL, &dstrect);

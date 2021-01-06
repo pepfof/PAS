@@ -40,7 +40,7 @@ void write_pa(){
     fprintf(fp,"%s",temptemp);
     reportsent=1;
     sprintf(temptemp, "at %02d:%02d %04d-%02d-%02d -f %s", gtk_spin_button_get_value_as_int (g_hourdial),gtk_spin_button_get_value_as_int (g_minutedial),year ,month+1, day, temp);
-    fprintf(fp,"%s",temptemp);
+    //fprintf(fp,"%s",temptemp);
     fclose(fp);
     delete_entry_at(year, month, day,gtk_spin_button_get_value_as_int (g_hourdial),gtk_spin_button_get_value_as_int (g_minutedial));
     int j = system(temptemp);
