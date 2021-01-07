@@ -123,13 +123,9 @@ while (fgets(input, 128, fp) != NULL){
     pa = fopen(tempfilename, "r");
       if (pa!=NULL)
   {
-    char temptemptemp[1024];
-    fgets(temptemptemp, 1024, pa);
-    sscanf(temptemptemp, "pas-send -I %d -F %d -i \"%[^\"] -f %[]", &tmessage, &tfile, tempmessage, tempattachment);
- //   sscanf(temptemptemp, "-f %64[^\"]s", tempattachment);
-    char temptemp[1024];
-    sprintf(temptemp, "echo %s %d", tempattachment, entry[i].number);
-    system(temptemp);
+    char temptemptemp[4096];
+    fgets(temptemptemp, 4096, pa);
+    sscanf(temptemptemp, "pas-send -I %i -F %i -i \"%[^\"]\" -f \"%[^\"]\"", &tmessage, &tfile, tempmessage, tempattachment);
     fclose (pa);
     bool c= 0;
     while(j<2048){

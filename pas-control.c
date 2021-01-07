@@ -36,7 +36,7 @@ void write_pa(){
     /*sprintf(temptemp, "Отослано: %s", temp);
     gtk_label_set_text(g_reportstring, temptemp);*/
     FILE *fp =fopen(temp, "w");
-    sprintf(temptemp, "pas-send -I %d -F %d -i \"%s\" -f \"%s\" ", messagein, mediain ,gtk_entry_get_text (g_messageinput),  gtk_file_chooser_get_filename (g_fileinput));
+    sprintf(temptemp, "pas-send -I %d -F %d -i \"%s \" -f \"%s \" ", messagein, mediain ,gtk_entry_get_text (g_messageinput),  gtk_file_chooser_get_filename (g_fileinput));
     fprintf(fp,"%s",temptemp);
     reportsent=1;
     sprintf(temptemp, "at %02d:%02d %04d-%02d-%02d -f %s", gtk_spin_button_get_value_as_int (g_hourdial),gtk_spin_button_get_value_as_int (g_minutedial),year ,month+1, day, temp);
@@ -62,7 +62,7 @@ void send_pa(){
     /*sprintf(temptemp, "Отослано: %s", temp);
     gtk_label_set_text(g_reportstring, temptemp);*/
     FILE *fp =fopen(temp, "w");
-    sprintf(temptemp, "pas-send -I %d -F %d -i \"%s\" -f \"%s\" ", messagein, mediain ,gtk_entry_get_text (g_messageinput),  gtk_file_chooser_get_filename (g_fileinput));
+    sprintf(temptemp, "pas-send -I %d -F %d -i \"%s \" -f \"%s \" ", messagein, mediain ,gtk_entry_get_text (g_messageinput),  gtk_file_chooser_get_filename (g_fileinput));
     fprintf(fp,"%s",temptemp);
     reportsent=1;
     sprintf(temptemp, "sh %s", temp);
