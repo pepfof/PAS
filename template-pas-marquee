@@ -1,1 +1,0 @@
-`pas-marquee.o -i %s -s 0.45 -t %d -l %d -w 1280 -h 150 -x 1920 -y 850 `

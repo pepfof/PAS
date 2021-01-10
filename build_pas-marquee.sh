@@ -1,4 +1,4 @@
-g++ -o pas-marquee.o pas-marquee.c `sdl2-config --libs --cflags` -lSDL2_ttf
+gcc -o ./bin/pas-marquee.o ./src/pas-marquee.c `sdl2-config --libs --cflags` -lSDL2_ttf
+sudo cp ./bin/pas-marquee.o /usr/local/bin/pas-marquee
 echo "built."
-sleep 1
-./pas-marquee.o -i lulllllllllllllllllllllllllllllllllllllllllllll -t 20000 -s 1
+pas-marquee -i lulllllllllllllllllllllllllllllllllllllllllllll -t 20000 -s 1
