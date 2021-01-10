@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
     check_error(mpv_initialize(ctx));
 
     // Play this file.
+    printf("%s\n", tempargv1);
     const char *cmd[] = {"loadfile", tempargv1, NULL};
     check_error(mpv_command(ctx, cmd));
     

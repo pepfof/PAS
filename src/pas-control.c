@@ -60,7 +60,7 @@ void send_pa(){
     gtk_calendar_get_date(g_calendial, &year, &month, &day);
     sprintf(temptemp, "now.pa");
     strcat(temp, homedir);
-    strcat(temp, "/PAS/announcements/");
+    strcat(temp, "/PAS/pannouncements/");
     strcat(temp, temptemp);
     /*sprintf(temptemp, "Отослано: %s", temp);
     gtk_label_set_text(g_reportstring, temptemp);*/
