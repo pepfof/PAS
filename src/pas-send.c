@@ -77,7 +77,7 @@ while (fgets(input, 128, fp) != NULL){
     sprintf(rfile, "/tmp/%d_r_FM", pidofoverlord);
     pipe = fopen(file, "w");
     char tempfilenamedone[512];
-    fprintf(pipe, "I %d F %d i \"%s \" f \"%s \"", msg, tfile, message, string);
+    fprintf(pipe, "I %d F %d i \"%s \" f \"%s \"", tfile, msg, message, string);
     fflush(pipe);
     fclose(pipe);
     pipe = fopen(rfile, "w");

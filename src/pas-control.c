@@ -17,6 +17,7 @@ GtkWidget *g_bellb;
 GtkButton *g_sendb;
 GtkButton *g_nowsb;
 GtkTreeView *g_list;
+GtkButton *g_copyb;
 GtkTreeSelection *g_selection; 
 
 bool messagein, mediain, sendnow;
@@ -151,8 +152,11 @@ int main(int argc, char *argv[])
     g_deleb = GTK_WIDGET(gtk_builder_get_object(builder, "deleb"));
     g_sendb = GTK_BUTTON(gtk_builder_get_object(builder, "sendb"));
     g_nowsb = GTK_BUTTON(gtk_builder_get_object(builder, "nowsb"));
+    g_copyb = GTK_BUTTON(gtk_builder_get_object(builder, "copyb"));
+    
     g_list = GTK_TREE_VIEW(gtk_builder_get_object(builder, "entrylist"));
     g_selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(g_list));
+    
     //g_signal_connect(g_selection, "changed", G_CALLBACK(on_changed), label);
     g_object_unref(builder);
      
@@ -161,6 +165,8 @@ int main(int argc, char *argv[])
     g_signal_connect (g_deleb, "clicked", G_CALLBACK (delete_pa), (gpointer) "deleb");
 
     gtk_widget_show(window);
+
+    gtk_widget_set_sensitive(GTK_WIDGET(g_copyb), 0);
 
     while(1) {
         if(time(0)-lastread>0){
