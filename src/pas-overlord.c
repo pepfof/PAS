@@ -70,7 +70,6 @@ int sendentry(){
             char removal[515];
             sprintf(removal,"rm %s", lockfilename);
             system(removal);
-            setproctitle
             exit(0);
             }
     }}

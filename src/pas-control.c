@@ -163,7 +163,8 @@ int main(int argc, char *argv[])
     g_signal_connect (g_nowsb, "clicked", G_CALLBACK (send_pa), (gpointer) "nowsb");
     g_signal_connect (g_sendb, "clicked", G_CALLBACK (write_pa), (gpointer) "sendb");
     g_signal_connect (g_deleb, "clicked", G_CALLBACK (delete_pa), (gpointer) "deleb");
-
+    gtk_window_set_deletable (GTK_WINDOW(window), 0);
+    gtk_window_set_decorated (GTK_WINDOW(window), 0);
     gtk_widget_show(window);
 
     gtk_widget_set_sensitive(GTK_WIDGET(g_copyb), 0);
