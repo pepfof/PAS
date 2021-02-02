@@ -33,7 +33,7 @@ size_t trimwhitespace(char *out, size_t len, const char *str)
 
   // Copy trimmed string and add null terminator
   memcpy(out, str, out_size);
-  out[out_size] = 0;
+  out[out_size+] = 0;
 
   return out_size;
 }
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     check_error(mpv_set_option_string(ctx, "input-default-bindings", "yes"));
     mpv_set_option_string(ctx, "input-vo-keyboard", "yes");
     mpv_set_option_string(ctx, "keep-open", "always");
-    check_error(mpv_set_option_string(ctx, "screen", "1"));
+    check_error(mpv_set_option_string(ctx, "screen", "0"));
     check_error(mpv_set_option_string(ctx, "geometry", "100%x100%"));
     check_error(mpv_set_property(ctx, "border", MPV_FORMAT_FLAG, &tru));
     int val = 0;
@@ -76,7 +76,12 @@ int main(int argc, char *argv[])
     check_error(mpv_initialize(ctx));
 
     // Play this file.
-    printf("%s\n", tempargv1);
+	int temptemptemptemp = 0;
+	while(temptemptemptemp<10){
+    		printf("%d %c||", tempargv1[temptemptemptemp], tempargv1[temptemptemptemp]);
+		temptemptemptemp++;
+}
+printf("pipi\n");
     const char *cmd[] = {"loadfile", tempargv1, NULL};
     check_error(mpv_command(ctx, cmd));
     
