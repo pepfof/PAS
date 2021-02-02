@@ -33,9 +33,9 @@ size_t trimwhitespace(char *out, size_t len, const char *str)
 
   // Copy trimmed string and add null terminator
   memcpy(out, str, out_size);
-  out[out_size+] = 0;
-
+  out[out_size] = 0;
   return out_size;
+
 }
 
 static inline void check_error(int status)
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     }
 
     char tempargv1[4096];
-    trimwhitespace(tempargv1, strlen(argv[1]), argv[1]);
+    trimwhitespace(tempargv1, strlen(argv[1])+1, argv[1]);
     mpv_handle *ctx = mpv_create();
     if (!ctx) {
         printf("failed creating context\n");
@@ -67,8 +67,8 @@ int main(int argc, char *argv[])
     check_error(mpv_set_option_string(ctx, "input-default-bindings", "yes"));
     mpv_set_option_string(ctx, "input-vo-keyboard", "yes");
     mpv_set_option_string(ctx, "keep-open", "always");
-    check_error(mpv_set_option_string(ctx, "screen", "0"));
-    check_error(mpv_set_option_string(ctx, "geometry", "100%x100%"));
+    //check_error(mpv_set_option_string(ctx, "screen", "0"));
+    check_error(mpv_set_option_string(ctx, "geometry", "1600x900"));
     check_error(mpv_set_property(ctx, "border", MPV_FORMAT_FLAG, &tru));
     int val = 0;
     check_error(mpv_set_option(ctx, "osc", MPV_FORMAT_FLAG, &val));
@@ -77,14 +77,13 @@ int main(int argc, char *argv[])
 
     // Play this file.
 	int temptemptemptemp = 0;
-	while(temptemptemptemp<10){
+	while(tempargv1[temptemptemptemp]!='\0'){
     		printf("%d %c||", tempargv1[temptemptemptemp], tempargv1[temptemptemptemp]);
 		temptemptemptemp++;
 }
 printf("pipi\n");
     const char *cmd[] = {"loadfile", tempargv1, NULL};
     check_error(mpv_command(ctx, cmd));
-    
     char tempfiletemplatedone[]="/tmp/pas_mpv_pipe_%d_done";
     char tempfiletemplate[]="/tmp/pas_mpv_pipe_%d";
     char tempfiletemplateready[]="/tmp/pas_mpv_pipe_%d_ready";
