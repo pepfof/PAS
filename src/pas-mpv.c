@@ -77,10 +77,10 @@ int main(int argc, char *argv[])
 
     // Play this file.
 	int temptemptemptemp = 0;
-	while(tempargv1[temptemptemptemp]!='\0'){
+/*	while(tempargv1[temptemptemptemp]!='\0'){
     		printf("%d %c||", tempargv1[temptemptemptemp], tempargv1[temptemptemptemp]);
 		temptemptemptemp++;
-}
+}*/
 printf("pipi\n");
     const char *cmd[] = {"loadfile", tempargv1, NULL};
     check_error(mpv_command(ctx, cmd));

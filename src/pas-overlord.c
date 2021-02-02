@@ -24,7 +24,7 @@ struct entry PA[64];
 
 int pushentry(bool file, bool message, char filename[1024], char charmessage[4096]){
 int i = 0;
-printf("pushing 1\n");
+//printf("pushing 1\n");
 while(i<64){
 if(!PA[i].exists){
     PA[i].file=file;
@@ -41,15 +41,14 @@ return 0;
 
 int sendentry(){
      int oldPID = getpid();
-	printf("sending 1\n");
+//	printf("sending 1\n");
      char lockfilename[4096];
             sprintf(lockfilename, "/tmp/pas-disp-%d-done", oldPID);
     if(!access(lockfilename, F_OK)) {
     }
     else{
-    
 if(PA[0].exists){
-	printf("sending 2 \n");
+//	printf("sending 2 \n");
     FILE* template_disp;
     char disp_command_prototype[4096];
     char temptemp[4096];
@@ -87,13 +86,13 @@ if(PA[0].exists){
         strcpy(PA[i].filename, PA[i+1].filename);
         i++;
     }
-    printf("moved to left \n");
+//    printf("moved to left \n");
     PA[64].exists=0;}
     }
 
 int readFILEMAIL(int pid){ // Gets the data from the listened to FILEMAIL into the structure array.
                 char tempfilename[512];
-		printf("reading 1\n");
+//		printf("reading 1\n");
                 char tempfilenameready[512];
                 sprintf(tempfilename, "/tmp/%d_FM", pid);
                 sprintf(tempfilenameready, "/tmp/%d_r_FM", pid);
@@ -109,20 +108,20 @@ int readFILEMAIL(int pid){ // Gets the data from the listened to FILEMAIL into t
                 int failure = sscanf(temptemptemp, "I %d F %d i \"%[^\"]\" f \"%[^\"]\"", &file, &tmessage, charmessage, filename);
                 int pushed = pushentry(file, tmessage, filename, charmessage);
                 if(pushed){
-		printf("reading 2\n");
+//		printf("reading 2\n");
                 char removal[515];
-		printf("reading n0\n");
+//		printf("reading n0\n");
                 //fclose(FILEMAILpipe);
-		printf("reading n1\n");
+//		printf("reading n1\n");
                 //fclose(FILEMAILpipeready);
-		printf("reading n2\n");
+//		printf("reading n2\n");
                 sprintf(removal,"rm %s", tempfilename);
-                printf("reading n3\n");
+//              printf("reading n3\n");
 		system(removal);
-		printf("reading n4\n");
+//		printf("reading n4\n");
 		sprintf(removal,"rm %s", tempfilenameready);
                 system(removal);
-		printf("reading 3\n");
+//		printf("reading 3\n");
                 }
                 return 0;
 };
@@ -130,7 +129,7 @@ int readFILEMAIL(int pid){ // Gets the data from the listened to FILEMAIL into t
 int listenToFILEMAIL(int pid){ // LISTENS to the specified PID FILEMAIL and sends the data if received to the structure table. Should be called every so often, at least once every 10 seconds.
                 char tempfilename[512];
                 sprintf(tempfilename, "/tmp/%d_FM", pid);
-		printf("waiting...\n");
+//		printf("waiting...\n");
 if( access( tempfilename, F_OK ) == 0 ) {
     readFILEMAIL(pid);
 }
