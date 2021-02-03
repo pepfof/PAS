@@ -19,6 +19,7 @@ char homedir[4096];
 int main(int argc, char ** argv)
 {
     snprintf(homedir, 4096, "%s", getenv("HOME"));
+    //printf("%s\n", homedir);
     char message[2048];
     char *argv0 = argv[0];
     int j;

@@ -19,6 +19,7 @@ GtkButton *g_nowsb;
 GtkTreeView *g_list;
 GtkButton *g_copyb;
 GtkTreeSelection *g_selection; 
+int not_embed = 0;
 
 bool messagein, mediain, sendnow;
 
@@ -123,11 +124,21 @@ void quit()
 
 int main(int argc, char *argv[])
 {
+   char *argv0 = argv[0];
+    int xj;
+    for (xj=1; argv[xj] && argv[xj][0] == '-'; ++xj) {  
+            if (strcmp(argv[xj], "-d") == 0) {
+            if (sscanf (argv[++xj], "%d", &not_embed) != 1) {
+                fprintf(stderr, "Use the -d flag to decorate PAS windows.");
+                return(1);
+            }
+            }
+            }
     snprintf(homedir, 4096, "%s", getenv("HOME"));
     long long int lastread=time(0);
     GtkBuilder      *builder; 
     GtkWidget       *window;
-
+    GtkWidget       *listwindow;
     gtk_init(&argc, &argv);
 
     builder = gtk_builder_new();
@@ -135,8 +146,11 @@ int main(int argc, char *argv[])
     snprintf(tempglade, 4096, "%s/PAS/paconfig/pas-control.glade", getenv("HOME"));
     gtk_builder_add_from_file (builder, tempglade, NULL);
     window = GTK_WIDGET(gtk_builder_get_object(builder, "window"));
+    listwindow = GTK_WIDGET(gtk_builder_get_object(builder, "listwindow"));
     gtk_builder_connect_signals(builder, NULL);
     g_signal_connect(G_OBJECT(window),
+        "destroy", quit, NULL);
+    g_signal_connect(G_OBJECT(listwindow),
         "destroy", quit, NULL);
     
     // get pointers all the gtk objects
@@ -163,9 +177,12 @@ int main(int argc, char *argv[])
     g_signal_connect (g_nowsb, "clicked", G_CALLBACK (send_pa), (gpointer) "nowsb");
     g_signal_connect (g_sendb, "clicked", G_CALLBACK (write_pa), (gpointer) "sendb");
     g_signal_connect (g_deleb, "clicked", G_CALLBACK (delete_pa), (gpointer) "deleb");
-    gtk_window_set_deletable (GTK_WINDOW(window), 0);
-    gtk_window_set_decorated (GTK_WINDOW(window), 0);
+    gtk_window_set_deletable (GTK_WINDOW(window), not_embed);
+    gtk_window_set_decorated (GTK_WINDOW(window), not_embed);
     gtk_widget_show(window);
+    gtk_window_set_deletable (GTK_WINDOW(listwindow), not_embed);
+    gtk_window_set_decorated (GTK_WINDOW(listwindow), not_embed);
+    gtk_widget_show(listwindow);
 
     gtk_widget_set_sensitive(GTK_WIDGET(g_copyb), 0);
 
