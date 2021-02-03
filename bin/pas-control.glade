@@ -410,7 +410,6 @@
                                         <property name="can_focus">True</property>
                                         <property name="hexpand">True</property>
                                         <property name="vexpand">True</property>
-                                        <property name="year">2021</property>
                                         <property name="show_week_numbers">True</property>
                                         <property name="detail_width_chars">15</property>
                                         <property name="detail_height_rows">20</property>
