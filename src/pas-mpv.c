@@ -48,13 +48,34 @@ static inline void check_error(int status)
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2) {
-        printf("pass a single media file as argument\n");
-        return 1;
-    }
+    char message[2048];
+    char *argv0 = argv[0];
+    int j;
+	int loop = 0;
+    long int time = 0;
+    for (j=1; argv[j] && argv[j][0] == '-'; ++j) {
+            if (strcmp(argv[j], "-i") == 0) {
+            if (sscanf (argv[++j], "%[^\"]", message) != 1) {
+                fprintf(stderr, "Improper usage. Use -i for input file, -t for playback time.");
+                return(1);
+            }
+            }else
+            if (strcmp(argv[j], "-t") == 0) {
+            if (sscanf (argv[++j], "%ld", &time) != 1) {
+                fprintf(stderr, "Improper usage. Use -i for input file, -t for playback time.");
+		return(1);
+            }
+            }else
+	    if (strcmp(argv[j], "-l") == 0) {
+            if (sscanf (argv[++j], "%d", &loop) != 1) {
+                fprintf(stderr, "Improper usage. Use -i for input file, -t for playback time.");
+		return(1);
+            }
+            }
+}
 
     char tempargv1[4096];
-    trimwhitespace(tempargv1, strlen(argv[1])+1, argv[1]);
+    trimwhitespace(tempargv1, strlen(message)+1, message);
     mpv_handle *ctx = mpv_create();
     if (!ctx) {
         printf("failed creating context\n");
@@ -67,8 +88,11 @@ int main(int argc, char *argv[])
     check_error(mpv_set_option_string(ctx, "input-default-bindings", "yes"));
     mpv_set_option_string(ctx, "input-vo-keyboard", "yes");
     mpv_set_option_string(ctx, "keep-open", "always");
-    //check_error(mpv_set_option_string(ctx, "screen", "0"));
-    check_error(mpv_set_option_string(ctx, "geometry", "1600x900"));
+    check_error(mpv_set_option_string(ctx, "screen", "1"));
+    char loopstr[16];
+    sprintf(loopstr, "%d", loop);
+    check_error(mpv_set_option_string(ctx, "loop", loopstr));
+    check_error(mpv_set_option_string(ctx, "geometry", "1024x768"));
     check_error(mpv_set_property(ctx, "border", MPV_FORMAT_FLAG, &tru));
     int val = 0;
     check_error(mpv_set_option(ctx, "osc", MPV_FORMAT_FLAG, &val));
@@ -77,10 +101,10 @@ int main(int argc, char *argv[])
 
     // Play this file.
 	int temptemptemptemp = 0;
-/*	while(tempargv1[temptemptemptemp]!='\0'){
+	while(tempargv1[temptemptemptemp]!='\0'){
     		printf("%d %c||", tempargv1[temptemptemptemp], tempargv1[temptemptemptemp]);
 		temptemptemptemp++;
-}*/
+}
 printf("pipi\n");
     const char *cmd[] = {"loadfile", tempargv1, NULL};
     check_error(mpv_command(ctx, cmd));

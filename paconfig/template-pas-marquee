@@ -1,1 +1,1 @@
-`pas-marquee -i %s -s 0.45 -t %d -l %d -w 1600 -h 150 -x 0 -y 0 `
+`pas-marquee -i %s -s 0.45 -t %d -l %d -w 1024 -h 150 -x 1600 -y 638 `

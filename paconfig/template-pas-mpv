@@ -1,1 +1,1 @@
-`pas-mpv "%s" `
+`pas-mpv -i "%s " `
