@@ -160,15 +160,18 @@ int main(int argc, char *argv[])
             char temp[3072];
             char formatstring[3075];
             sprintf(formatstring, "\"%s\"", string);  
-            sprintf(temp, marquee_command_prototype, formatstring, 1000, 1);
+            sprintf(temp, marquee_command_prototype, formatstring, 45000, 1);
             wordexp_t p;
             char **w;
+		char bell[4096];
+		sprintf(bell, "aplay --disable-softvol %s/PAS/paconfig/bell.wav", homedir);
+                system(bell);
             wordexp(temp, &p, 0);
             w = p.we_wordv;
             execvp(w[0],w);
                 }
                 else{
-                char tempfiletemplatemarqueedone[]="/tmp/pas_marquee_pipe_%d_done";
+		char tempfiletemplatemarqueedone[]="/tmp/pas_marquee_pipe_%d_done";
                 char tempfilenamemarqueedone[512];
                sprintf(tempfilenamemarqueedone, tempfiletemplatemarqueedone, PIDmar);
                 FILE * marpipedone;
