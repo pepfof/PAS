@@ -138,7 +138,10 @@ return 0;
 
 int main(int argc, char *argv[])
 {
-
+    char tempfilenamepid[512];
+    long long int mypid = getpid();
+    sprintf(tempfilenamepid, "echo %lld > /tmp/pas_overlord_pid", mypid);
+    system(tempfilenamepid);
     snprintf(homedir, 4096, "%s", getenv("HOME"));
     long int lastread = 0;
     while(1){
